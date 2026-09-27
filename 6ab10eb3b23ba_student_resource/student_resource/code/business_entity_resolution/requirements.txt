@@ -1,0 +1,23 @@
+# Amazon ML Challenge 2026 - Entity Resolution Pipeline
+# Team: GradientX
+# Core dependencies
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+lightgbm>=4.0
+pyarrow>=12.0
+
+# Text similarity & fuzzy matching
+rapidfuzz>=3.0
+textdistance>=4.5
+unidecode>=1.3
+
+# Sparse dot product / candidate generation
+sparse_dot_topn>=0.3
+scipy>=1.10
+
+# Phonetic & embedding
+sentence-transformers>=2.2
+faiss-cpu>=1.7
+phonetics>=1.0
+catboost>=1.2
