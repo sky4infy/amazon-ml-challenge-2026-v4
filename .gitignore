@@ -1,0 +1,47 @@
+# Raw datasets (multi-gigabyte TSVs)
+dataset/
+**/dataset/**
+*.tsv
+*.csv
+
+# Preprocessed Parquet and model cache files
+cache/
+**/cache/**
+*.parquet
+
+# Output submission results (74MB - 744MB)
+output/
+**/output/**
+
+# Zip archives
+*.zip
+*.tar.gz
+
+# Python compiled bytecode & caches
+__pycache__/
+**/__pycache__/**
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+venv_gpu/
+.venv/
+
+# System and logs
+.DS_Store
+Thumbs.db
+*.log
+__MACOSX/
+**/__MACOSX/**
+._*
+**/._*
+catboost_info/
+**/catboost_info/**
+
+# Internal masterplans
+*masterplan*.md
+masterplan_v4.md
+**/masterplan_v4.md
