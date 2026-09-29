@@ -23,7 +23,7 @@ This repository contains the complete, production-grade **Pipeline V4** develope
 The challenge requires resolving canonical reference businesses (`Source 1`) across heterogeneous, noisy external databases (`Source 2` and `Source 3`) spanning **24.2M+ records** (12.5M+ train, 11.7M+ test) across the **United States, India, and France** under an asymmetric many-to-one linkage topology, evaluated on **Entity-Level Macro $F_{0.5}$**.
 
 Pipeline V4 achieved the team's highest official benchmark (**0.8380 on live Public Leaderboard**) by combining:
-1. **38-Channel Hybrid Super-Blocking Engine:** Crushed the candidate recall ceiling (surging from 71% in V3 to **96.64% global recall**).
+1. **38-Channel Hybrid Super-Blocking Engine:** Crushed the candidate recall ceiling (surging from an initial ~71% baseline to **96.64% global recall**).
 2. **56-Feature C++ RapidFuzz Extraction:** SIMD-accelerated string distances, structured token alignment, and missing-address immune flags.
 3. **Dual-Model GBDT Ensemble:** Blended leaf-wise LightGBM with GPU-accelerated CatBoost oblivious symmetric trees.
 4. **Strict Precision Gap Guard:** Once an entity accumulates $\ge 2$ matches, any trailing candidate whose probability drops by $> 0.16$ below the top match is immediately rejected, fiercely defending the $4\times$ precision weighting in Macro $F_{0.5}$.
@@ -58,7 +58,7 @@ graph TD
 
 ---
 
-## 🔬 Architectural Breakdown (How V4 Followed Masterplan V4)
+## 🔬 Pipeline V4 System Architecture & Technical Specifications
 
 ### 1. Multi-National Preprocessing & Normalization
 * **Indic Script Transliteration (`indic-transliteration`):** In the Indian catalog partition (~46.8% of test data), $S1$ queries were in English while $S2/S3$ records appeared in Devanagari, Tamil, Telugu, and Bengali. Transcoding phonetic scripts into Latin ITRANS representation boosted cross-script Jaro-Winkler similarity from `0.000` to `> 0.68`.
@@ -67,7 +67,7 @@ graph TD
 * **French Zero-Shot Normalization:** Standardized French legal identifiers (`SARL`, `SAS`, `EURL`) and street types (`Rue`, `Avenue`, `Boulevard`, 5-digit French postal codes).
 
 ### 2. 38-Channel Hybrid Super-Blocking Engine
-Downstream models can only score retrieved pairs. In V3, blocking achieved only 71.26% recall. Pipeline V4 deployed **38 inverted channels**:
+Downstream models can only score retrieved pairs. Initial baseline blocking achieved only 71.26% recall. Pipeline V4 deployed **38 inverted channels**:
 * **Tier 1 (Morphological Invariants):** Exact normalized name, cleaned suffix-strip name, space-collapsed name, sorted unique tokens.
 * **Tier 2 (Geographic Anchors):** City + street number, city + first token, postal 5-digit + first token, city + prefix 2/3/4.
 * **Tier 3 (State & Plot Invariants):** State code + exact name, state code + clean suffix, state code + building/plot codes (`109/1`, `Pl.No.370`, `B-2/74`).
