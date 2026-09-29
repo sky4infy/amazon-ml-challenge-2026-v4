@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1200" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 26px; font-weight: 700; fill: #ffffff; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; fill: #8b949e; }
+      .badge { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #3fb950; }
+      .phase-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 17px; font-weight: 600; fill: #58a6ff; }
+      .phase-desc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 400; fill: #c9d1d9; }
+      .metric-tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #f0883e; }
+      .box { rx: 10px; ry: 10px; stroke-width: 1.5px; }
+      .arrow { stroke: #58a6ff; stroke-width: 2.5px; fill: none; stroke-linecap: round; }
+      .arrow-head { fill: #58a6ff; }
+    </style>
+    
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1f6feb" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#238636" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="1200" fill="#0d1117" rx="16"/>
+
+  <!-- Header Banner -->
+  <rect x="30" y="25" width="1040" height="90" rx="12" fill="url(#headerGrad)" stroke="#30363d" stroke-width="1.5"/>
+  <text x="60" y="65" class="title">Amazon ML Challenge 2026 — Pipeline V4 Architecture</text>
+  <text x="60" y="93" class="subtitle">Large-Scale Entity Resolution across 24.2M Records | Official Public Leaderboard Peak: </text>
+  <text x="740" y="93" class="badge" font-size="16">0.8380 Entity-Level Macro F0.5</text>
+
+  <!-- Stage 1: Raw Inputs -->
+  <rect x="180" y="145" width="740" height="85" class="box" fill="#161b22" stroke="#30363d"/>
+  <text x="210" y="175" class="phase-title" fill="#7ee787">1. Multi-National Raw TSV Data Sources (24.2M Records Universe)</text>
+  <text x="210" y="198" class="phase-desc">• S1 Queries: 1,732,544 test entities | S2 &amp; S3 Targets: 9,970,000 records</text>
+  <text x="210" y="216" class="phase-desc">• Regions: India (46.8%), US (38.3%), France (15.0% zero-shot domain shift)</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="550" y1="230" x2="550" y2="260" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Preprocessing -->
+  <rect x="180" y="260" width="740" height="105" class="box" fill="#161b22" stroke="#30363d"/>
+  <text x="210" y="290" class="phase-title">2. Multi-National Normalization &amp; Script Transliteration</text>
+  <text x="210" y="313" class="phase-desc">• Indic Transliteration: Devanagari, Tamil, Telugu ➔ Latin ITRANS (Jaro: 0.00 ➔ 0.68+)</text>
+  <text x="210" y="333" class="phase-desc">• Domain Word-Segmentation: urbanconstruction.com ➔ urban construction</text>
+  <text x="210" y="352" class="phase-desc">• Title/Tag Stripping (M/s, Shree, Dr) &amp; French Normalization (SARL, SAS, Rue, Code Postal)</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="550" y1="365" x2="550" y2="395" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: Super-Blocking Engine -->
+  <rect x="150" y="395" width="800" height="135" class="box" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="180" y="425" class="phase-title" fill="#38bdf8">3. 38-Channel Hybrid Super-Blocking Engine (Crushing the Recall Ceiling)</text>
+  <text x="180" y="448" class="phase-desc">• 18 Inverted Hash Channels: Exact, Transliterated, Suffix-Cleaned, Sorted Tokens</text>
+  <text x="180" y="468" class="phase-desc">• Locality &amp; Structural Anchors: Plot/Door Regex (109/1, Pl.No.370), State + Name, City + Street Num</text>
+  <text x="180" y="488" class="phase-desc">• Approximate ANN: Sparse char-wb (3,5) TF-IDF Cosine joining via C++ OpenMP kernels</text>
+  <rect x="180" y="500" width="480" height="22" rx="4" fill="#1e293b"/>
+  <text x="190" y="515" class="metric-tag">Global Blocking Recall: 96.64% (US: 97.99%, India: 94.62%) | Ceiling Broken</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="550" y1="530" x2="550" y2="560" class="arrow" stroke="#38bdf8" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: Feature Space -->
+  <rect x="180" y="560" width="740" height="105" class="box" fill="#161b22" stroke="#30363d"/>
+  <text x="210" y="590" class="phase-title">4. 56-Feature SIMD C++ RapidFuzz Extraction Engine</text>
+  <text x="210" y="613" class="phase-desc">• Token SIMD: Jaro-Winkler, Levenshtein, Token Sort Ratio, Jaccard, Simpson Overlap</text>
+  <text x="210" y="633" class="phase-desc">• Subfield Alignment: Exact Postal match, Street number match, City similarity</text>
+  <text x="210" y="652" class="phase-desc">• Decoupled Dual-Head logic to prevent feature collapse on 30.2% null addresses</text>
+
+  <!-- Arrow 4 -> 5 -->
+  <line x1="550" y1="665" x2="550" y2="695" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: GBDT Ensemble -->
+  <rect x="150" y="695" width="800" height="120" class="box" fill="#1e1b4b" stroke="#a855f7"/>
+  <text x="180" y="725" class="phase-title" fill="#c084fc">5. Dual-Model GBDT Diversity Ensemble (LightGBM + CatBoost GPU)</text>
+  <text x="180" y="748" class="phase-desc">• LightGBM Booster: Leaf-wise trees with monotonic constraints &amp; precision-weighted loss</text>
+  <text x="180" y="768" class="phase-desc">• CatBoost GPU: Oblivious symmetric trees for zero-shot generalization on France</text>
+  <text x="180" y="788" class="phase-desc">• Soft-Voting Blend: P = 0.80 * P_LightGBM + 0.20 * P_CatBoost (70% CatBoost on France)</text>
+  <text x="180" y="805" class="metric-tag">Streaming Inference: 35k-query chunks | Peak RAM strictly &lt; 9.5 GB</text>
+
+  <!-- Arrow 5 -> 6 -->
+  <line x1="550" y1="815" x2="550" y2="845" class="arrow" stroke="#a855f7" marker-end="url(#arrow)"/>
+
+  <!-- Stage 6: Precision Gap Guard -->
+  <rect x="150" y="845" width="800" height="130" class="box" fill="#1c1917" stroke="#f97316"/>
+  <text x="180" y="875" class="phase-title" fill="#fb923c">6. Country Thresholds &amp; Strict Precision Gap Guard</text>
+  <text x="180" y="898" class="phase-desc">• Country-Calibrated Base Cutoffs: US (0.68), India (0.65), France (0.67)</text>
+  <text x="180" y="918" class="phase-desc">• Strict Gap Guard: If entity_matches &gt;= 2 and prob &lt; (top_prob - 0.16) ➔ INSTANT REJECT</text>
+  <text x="180" y="938" class="phase-desc">• Protects 5.58% Ground Truth Singletons against the 4x Precision Penalty in F0.5</text>
+  <text x="180" y="958" class="metric-tag">Precision Preservation: Avoids false positives that drop singleton score from 1.0 to 0.0</text>
+
+  <!-- Arrow 6 -> 7 -->
+  <line x1="550" y1="975" x2="550" y2="1005" class="arrow" stroke="#f97316" marker-end="url(#arrow)"/>
+
+  <!-- Stage 7: Bipartite Matching & Deliverables -->
+  <rect x="180" y="1005" width="740" height="135" class="box" fill="#064e3b" stroke="#34d399"/>
+  <text x="210" y="1035" class="phase-title" fill="#6ee7b7">7. Greedy Injective Bipartite Matching &amp; Official Submission</text>
+  <text x="210" y="1058" class="phase-desc">• Capacity-Constrained Matching: Enforces 1 target record ➔ at most 1 query entity</text>
+  <text x="210" y="1078" class="phase-desc">• Output Deliverables: matching_results.tsv (1,732,544 rows) &amp; candidate_pairs.tsv</text>
+  <text x="210" y="1098" class="phase-desc">• Fully validated via validate_submission.py with 100% format &amp; constraint compliance</text>
+  <rect x="210" y="1108" width="530" height="22" rx="4" fill="#047857"/>
+  <text x="220" y="1124" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13px" font-weight="700" fill="#ffffff">★ Verified Public Leaderboard Score: 0.8380 Macro F0.5 (+0.1360 Over Baseline)</text>
+
+</svg>
